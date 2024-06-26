@@ -1,30 +1,8 @@
-# React + TypeScript + Vite
+# 플러스 주차 개인 과제
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🔥 필수 구현 사항
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- [ ] vite, react, typescript 기반의 프로젝트를 시작합니다.
+- [ ] 제공된 API 를 호출하는 로직을 작성하고 적절한 타입을 사용합니다.
+- [ ] API 의 응답 값을 컴포넌트에서 useState 를 이용해 상태관리를 해줍니다. 적절한 타입이 꼭 명시되어야 합니다.
+- [ ] useState 에서 상태관리되고 있는 값들을 화면에 보여주고, 사용자와 인터렉션 (선택/해제) 가 가능하도록 합니다. 이 과정에서 적절한 타입이 명시되어 있는 함수를 사용하도록 합니다.
