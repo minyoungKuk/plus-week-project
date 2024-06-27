@@ -1,6 +1,6 @@
-import { countryProps } from "../types/country";
+import { countryCardProps } from "../types/country";
 
-const CountryCard = ({ country, onClick, isFavorite }: countryProps) => {
+const CountryCard = ({ country, onClick, isFavorite }: countryCardProps) => {
   return (
     <div
       onClick={onClick}
@@ -10,10 +10,10 @@ const CountryCard = ({ country, onClick, isFavorite }: countryProps) => {
     >
       <img
         className="w-20 h-auto mx-auto mb-4"
-        src={country.flags.png}
-        alt={`${country.name.common} flag image`}
+        src={country.flag_url}
+        alt={`${country.name} flag image`}
       />
-      <h3 className="text-xl font-semibold mb-2"> {country.name.common} </h3>
+      <h3 className="text-xl font-semibold mb-2"> {country.name} </h3>
       <p className="text-gray-600"> {country.capital} </p>
     </div>
   );
