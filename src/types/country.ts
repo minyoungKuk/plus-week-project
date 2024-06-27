@@ -9,8 +9,15 @@ export type Country = {
   };
 };
 
-export interface countryProps {
-  country: Country;
+export interface countryCardProps {
+  country: PostCountryProps;
   onClick: React.MouseEventHandler<HTMLDivElement>;
   isFavorite: boolean;
+}
+
+export interface PostCountryProps {
+  id: number;
+  name: string;
+  flag_url: string;
+  capital: string;
 }
