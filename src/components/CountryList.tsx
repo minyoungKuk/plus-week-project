@@ -5,37 +5,40 @@ import { Country, PostCountryProps } from "../types/country";
 import CountryCard from "./CountryCard";
 
 function CountryList() {
-  const [countryList, setCountryList] = useState<Country[]>([]);
+  const [countryList, setCountryList] = useState<PostCountryProps[]>([]);
   const [favoriteList, setFavoriteList] = useState<PostCountryProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchCountries(
-      setCountryList,
+      (countries: Country[]) => {
+        const formattedCountries = countries.map((country) => ({
+          id: country.id,
+          name: country.name.common,
+          capital:
+            country.capital && country.capital.length > 0
+              ? country.capital[0]
+              : "",
+          flag_url: country.flags.png,
+        }));
+        setCountryList(formattedCountries);
+      },
       setFavoriteList,
       setErrorMessage,
       setIsLoading
     );
   }, []);
 
-  const handleAddCountry = async (selectedCountry: Country) => {
-    const postingCountry: PostCountryProps = {
-      id: selectedCountry.id,
-      name: selectedCountry.name.common,
-      capital:
-        selectedCountry.capital.length > 0 ? selectedCountry.capital[0] : "",
-      flag_url: selectedCountry.flags.png,
-    };
-
+  const handleAddCountry = async (selectedCountry: PostCountryProps) => {
     try {
       const { error } = await supabase
         .from("favorite_countries")
-        .insert(postingCountry);
+        .insert(selectedCountry);
 
       if (error) throw error;
 
-      setFavoriteList((prevList) => [...prevList, postingCountry]);
+      setFavoriteList((prevList) => [...prevList, selectedCountry]);
 
       setCountryList(
         countryList.filter((list) => list.id !== selectedCountry.id)
@@ -62,15 +65,7 @@ function CountryList() {
 
       if (!countryList.some((country) => country.id === selectedCountry.id)) {
         setCountryList((prevList) => {
-          const newCountryList = [
-            ...prevList,
-            {
-              id: selectedCountry.id,
-              name: { common: selectedCountry.name },
-              capital: [selectedCountry.capital],
-              flags: { png: selectedCountry.flag_url },
-            } as Country,
-          ];
+          const newCountryList = [...prevList, selectedCountry];
           return newCountryList.sort((a, b) => a.id - b.id);
         });
       }
@@ -82,13 +77,13 @@ function CountryList() {
   };
 
   const handleCountryClick = (
-    country: Country | PostCountryProps,
+    country: PostCountryProps,
     isFavorite: boolean
   ) => {
     if (isFavorite) {
-      handleRemoveCountry(country as PostCountryProps);
+      handleRemoveCountry(country);
     } else {
-      handleAddCountry(country as Country);
+      handleAddCountry(country);
     }
   };
 
@@ -130,23 +125,12 @@ function CountryList() {
         <h2 className="py-4 text-3xl font-bold text-center mb-8">Countries</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {countryList.map((country) => {
-            const isFavorite = favoriteList.some(
-              (fav) => fav.id === country.id
-            );
             return (
               <CountryCard
                 key={country.id}
-                country={{
-                  id: country.id,
-                  name: country.name.common,
-                  capital:
-                    country.capital && country.capital.length > 0
-                      ? country.capital[0]
-                      : "",
-                  flag_url: country.flags.png,
-                }}
-                onClick={() => handleCountryClick(country, isFavorite)}
-                isFavorite={isFavorite}
+                country={country}
+                onClick={() => handleCountryClick(country, false)}
+                isFavorite={false}
               />
             );
           })}

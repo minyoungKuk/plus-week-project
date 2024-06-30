@@ -14,5 +14,3 @@ export const countyAPI = async () => {
     }
   }
 };
-
-countyAPI();
