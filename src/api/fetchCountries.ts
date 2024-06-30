@@ -1,6 +1,6 @@
 import { supabase } from "../config/supabase";
 import { Country, PostCountryProps } from "../types/country";
-import { countyAPI } from "./country.api";
+import { countyAPI as countryAPI } from "./country.api";
 
 export const fetchCountries = async (
   setCountryList: (countries: Country[]) => void,
@@ -9,7 +9,7 @@ export const fetchCountries = async (
   setIsLoading: (loading: boolean) => void
 ) => {
   try {
-    const data = await countyAPI();
+    const data = await countryAPI();
     const countryListData = data.map((countryList: Country, index: number) => ({
       ...countryList,
       id: index,
